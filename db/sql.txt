@@ -1,0 +1,15 @@
+CREATE TABLE tourism(
+  "Country ISO3" TEXT,
+  "Country Name" TEXT,
+  "Year" INTEGER,
+  "International tourism, expenditures (% of total imports)" FLOAT,
+  "International tourism, expenditures (current US$)" FLOAT,
+  "International tourism, expenditures for passenger transport items (current US$)" FLOAT,
+  "International tourism, expenditures for travel items (current US$)" FLOAT,
+  "International tourism, number of arrivals" FLOAT,
+  "International tourism, number of departures" FLOAT,
+  "International tourism, receipts (% of total exports)" FLOAT,
+  "International tourism, receipts (current US$)" FLOAT,
+  "International tourism, receipts for passenger transport items (current US$)" FLOAT,
+  "International tourism, receipts for travel items (current US$)" FLOAT
+);
