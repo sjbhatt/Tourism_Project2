@@ -13,3 +13,18 @@ CREATE TABLE tourism(
   "International tourism, receipts for passenger transport items (current US$)" FLOAT,
   "International tourism, receipts for travel items (current US$)" FLOAT
 );
+
+CREATE TABLE intl_tourism(
+"country_iso" TEXT,
+"country_name" TEXT,
+"year" INTEGER,
+"expd_pct_imp" FLOAT,
+"expd_total" FLOAT,
+"expd_trans" FLOAT,
+"expd_items" FLOAT,
+"arrivals" FLOAT,
+"departures" FLOAT,
+"rcpt_pct_exp" FLOAT,
+"rcpt_total" FLOAT,
+"rcpt_trans" FLOAT,
+"rcpt_items" FLOAT);
