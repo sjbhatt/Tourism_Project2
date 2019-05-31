@@ -15,6 +15,7 @@ CREATE TABLE tourism(
 );
 
 CREATE TABLE intl_tourism(
+"id" INTEGER PRIMARY KEY,
 "country_iso" TEXT,
 "country_name" TEXT,
 "year" INTEGER,
