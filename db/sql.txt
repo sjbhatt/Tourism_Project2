@@ -28,4 +28,6 @@ CREATE TABLE intl_tourism(
 "rcpt_pct_exp" FLOAT,
 "rcpt_total" FLOAT,
 "rcpt_trans" FLOAT,
-"rcpt_items" FLOAT);
+"rcpt_items" FLOAT,
+"longitude" FLOAT,
+"latitude" FLOAT);
