@@ -124,6 +124,32 @@ def emoji_name_data():
     }
     return jsonify(plot_trace)
 """
+@app.route("/arriv_dep_data")
+def tourism_arriv_dep_data():
+    
+    # Query for the top 10 emoji data
+    # arrival_results = db.session.query (Tourists).filter(Tourists.year >= 2008, Tourists.year<=2017).\
+    #     order_by(Tourists.arrivals.desc()).\
+    #     limit(10).all()
+    arrival_results = db.session.query (Tourists.arrivals,Tourists.country_iso,Tourists.country_name).filter(Tourists.arrivals != "").\
+        filter(Tourists.year == 2017).order_by(Tourists.arrivals.desc()).\
+        limit(1000).all()
+    data=[]
+
+    for arrivals, country_iso, country_name in arrival_results:
+        arrival_dct = {}
+        arrival_dct["arrivals"] = arrivals
+        arrival_dct["country_iso"] = country_iso
+        arrival_dct["country_name"] = country_name
+        data.append(arrival_dct)
+
+    return jsonify(data)
+
+@app.route("/arrivals")
+def arrivals():
+    """Render Arrivals Page."""
+    return render_template("test1.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
