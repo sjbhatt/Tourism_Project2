@@ -1,0 +1,44 @@
+/* remove default margin and padding from body */
+body {
+    padding: 0;
+    margin: 0;
+  }
+
+/* set map, body, and html to 100% of the screen size */
+#map, body, html {
+    height: 100%;
+  }
+
+/* style for the legend */
+.legend {
+  padding: 5px 10px;
+  background: gainsboro;
+  box-shadow: 2px 2px 2px #333333;
+  border-radius: 5px;
+}
+
+.legend h5 {
+  margin: 0px;
+  padding-left: 0px;
+  padding-bottom: 3px;
+  font-family: Helvetica;
+}
+
+h4, h5 {
+  margin: 0px;
+  padding: 0px;
+  font-family: Helvetica;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: lightslategrey;
+  margin: 1 0 1 0;
+}
+
+p {
+  margin: -5px;
+  padding: -6px;
+  font-family: Helvetica;
+}
