@@ -70,60 +70,7 @@ def tourism_arrival_departure_data():
         # print(data.arrivals)
         data.append(x.arrivals)
     return jsonify({'data':data})
-"""    
-    # departure_results = db.session.query (Tourists).filter(Tourists.year >= 2008, Tourists.year<=2017)#.\
-        # order_by(Tourists.departures.desc()).\
-        # limit(10).all()
 
-
-    # Create lists from the query results
-    emoji_char = [result[0] for result in results]
-    scores = [int(result[1]) for result in results]
-
-    # Generate the plot trace
-    trace = {
-        "x": emoji_char,
-        "y": scores,
-        "type": "bar"
-    }
-    return jsonify(trace)
-
-
-@app.route("/emoji_id")
-def emoji_id_data():
-    
-    # Query for the emoji data using pandas
-    query_statement = db.session.query(Tourists).\
-        order_by(Tourists.score.desc()).\
-        limit(10).statement
-    df = pd.read_sql_query(query_statement, db.session.bind)
-
-    # Format the data for Plotly
-    trace = {
-        "x": df["emoji_id"].values.tolist(),
-        "y": df["score"].values.tolist(),
-        "type": "bar"
-    }
-    return jsonify(trace)
-
-
-@app.route("/emoji_name")
-def emoji_name_data():
-    
-    # Query for the top 10 emoji data
-    results = db.session.query(Tourists.name, Tourists.score).\
-        order_by(Tourists.score.desc()).\
-        limit(10).all()
-    df = pd.DataFrame(results, columns=['name', 'score'])
-
-    # Format the data for Plotly
-    plot_trace = {
-        "x": df["name"].values.tolist(),
-        "y": df["score"].values.tolist(),
-        "type": "bar"
-    }
-    return jsonify(plot_trace)
-"""
 @app.route("/arriv_dep_data")
 def tourism_arriv_dep_data():
     
@@ -131,14 +78,15 @@ def tourism_arriv_dep_data():
     # arrival_results = db.session.query (Tourists).filter(Tourists.year >= 2008, Tourists.year<=2017).\
     #     order_by(Tourists.arrivals.desc()).\
     #     limit(10).all()
-    arrival_results = db.session.query (Tourists.arrivals,Tourists.country_iso,Tourists.country_name).filter(Tourists.arrivals != "").\
+    arrival_results = db.session.query (Tourists.arrivals,Tourists.departures,Tourists.country_iso,Tourists.country_name).filter(Tourists.arrivals != "").\
         filter(Tourists.year == 2017).order_by(Tourists.arrivals.desc()).\
         limit(1000).all()
     data=[]
 
-    for arrivals, country_iso, country_name in arrival_results:
+    for arrivals, departures, country_iso, country_name in arrival_results:
         arrival_dct = {}
         arrival_dct["arrivals"] = arrivals
+        arrival_dct["departures"] = departures
         arrival_dct["country_iso"] = country_iso
         arrival_dct["country_name"] = country_name
         data.append(arrival_dct)
@@ -148,7 +96,17 @@ def tourism_arriv_dep_data():
 @app.route("/arrivals")
 def arrivals():
     """Render Arrivals Page."""
-    return render_template("test1.html")
+    return render_template("arrivals.html")
+
+@app.route("/departures")
+def departures():
+    """Render Arrivals Page."""
+    return render_template("departures.html")
+
+@app.route("/combined_data")
+def combined_data():
+    """Render Arrivals Page."""
+    return render_template("combinedData.html")
 
 
 if __name__ == '__main__':
