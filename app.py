@@ -55,21 +55,77 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/tourism_data")
-def tourism_arrival_departure_data():
+@app.route("/tourism_arrival_data")
+def tourism_arrival_data():
     
-    # Query for the top 10 emoji data
-    # arrival_results = db.session.query (Tourists).filter(Tourists.year >= 2008, Tourists.year<=2017).\
-    #     order_by(Tourists.arrivals.desc()).\
-    #     limit(10).all()
-    arrival_results = db.session.query (Tourists.arrivals,Tourists.country_name).filter(Tourists.arrivals != "").\
+    arrival_results = db.session.query (Tourists.country_name).filter(Tourists.arrivals != "", Tourists.year == 2017 ).\
         order_by(Tourists.arrivals.desc()).\
-        limit(1000).all()
-    data=[]
+        all()
+    
+    top_country_list = []
+    low_arrival_count = []
+    high_arrival_count = []
+    arrival_count_2008 = []
+    arrival_count_2017 = []
+        
     for x in arrival_results:
-        # print(data.arrivals)
-        data.append(x.arrivals)
-    return jsonify({'data':data})
+        top_country_list.append(x.country_name)
+
+    for x in top_country_list:
+        query_data =  db.session.query (Tourists.year, Tourists.arrivals).filter(Tourists.country_name == x).filter(Tourists.arrivals != "", Tourists.year >= 2008, Tourists.year<=2017).all()
+        no_of_arrivals = []
+        no_of_arrivals = [int(result[1]) for result in query_data]
+        low_arrival_count.append(min(no_of_arrivals))
+        high_arrival_count.append(max(no_of_arrivals))
+        arrival_count_2008.append(no_of_arrivals[0])
+        arrival_count_2017.append(no_of_arrivals[len(no_of_arrivals)-1])       
+    
+    trace = {
+        "type" : "candlestick",
+        "x" : top_country_list,
+        "high" : high_arrival_count,
+        "low" : low_arrival_count,
+        "open" : arrival_count_2008,
+        "close" : arrival_count_2017
+    }
+
+    return jsonify(trace)
+
+@app.route("/tourism_departure_data")
+def tourism_departure_data():
+    
+    departure_results = db.session.query (Tourists.country_name).filter(Tourists.departures != "", Tourists.year == 2017 ).\
+        order_by(Tourists.departures.desc()).all()
+    
+    top_country_list = []
+    low_departure_count = []
+    high_departure_count = []
+    departure_count_2008 = []
+    departure_count_2017 = []
+        
+    for x in departure_results:
+        top_country_list.append(x.country_name)
+
+    for x in top_country_list:
+        query_data_2 =  db.session.query (Tourists.year, Tourists.departures).filter(Tourists.country_name == x).filter(Tourists.departures != "", Tourists.year >= 2008, Tourists.year<=2017).all()
+        no_of_departures = []
+        no_of_departures = [int(result[1]) for result in query_data_2]
+        low_departure_count.append(min(no_of_departures))
+        high_departure_count.append(max(no_of_departures))
+        departure_count_2008.append(no_of_departures[0])
+        departure_count_2017.append(no_of_departures[len(no_of_departures)-1])       
+    
+    trace = {
+        "type" : "candlestick",
+        "x" : top_country_list,
+        "high" : high_departure_count,
+        "low" : low_departure_count,
+        "open" : departure_count_2008,
+        "close" : departure_count_2017
+    }
+
+    return jsonify(trace)
+
 
 @app.route("/arriv_dep_data")
 def tourism_arriv_dep_data():
