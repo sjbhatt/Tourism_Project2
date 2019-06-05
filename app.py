@@ -49,10 +49,15 @@ def setup():
     db.create_all()
 
 
-@app.route("/")
+@app.route("/candlestick_arrivals")
 def home():
     """Render Home Page."""
-    return render_template("index.html")
+    return render_template("candlestick_arrivals.html")
+
+@app.route("/candlestick_departures")
+def home():
+    """Render Home Page."""
+    return render_template("candlestick_departures.html")
 
 
 @app.route("/tourism_arrival_data")
