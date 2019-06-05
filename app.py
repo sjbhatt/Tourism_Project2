@@ -50,12 +50,12 @@ def setup():
 
 
 @app.route("/candlestick_arrivals")
-def home():
+def candlestick_arrivals():
     """Render Home Page."""
     return render_template("candlestick_arrivals.html")
 
 @app.route("/candlestick_departures")
-def home():
+def candlestick_departures():
     """Render Home Page."""
     return render_template("candlestick_departures.html")
 
