@@ -39,6 +39,9 @@ class Tourists(db.Model):
     def __repr__(self):
         return '<Tourists %r>' % (self.name)
 
+@app.route("/")
+def home():
+    return render_template("index.html")
 
 @app.route("/candlestick_arrivals")
 def candlestick_arrivals():
