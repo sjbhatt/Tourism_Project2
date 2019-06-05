@@ -164,6 +164,32 @@ def combined_data():
     """Render Arrivals Page."""
     return render_template("combinedData.html")
 
+@app.route("/tourism_mapdata.json")
+def tourism_lnglat_filter():
+    """Return JSON for mapable tourism data"""
+    map_data = db.session.query(Tourists.country_name,\
+        Tourists.expd_pct_imp, Tourists.expd_total,\
+        Tourists.rcpt_pct_exp, Tourists.rcpt_total,\
+        Tourists.longitude, Tourists.latitude).\
+        filter(Tourists.year == 2017).\
+        filter(Tourists.expd_pct_imp != "").\
+        filter(Tourists.longitude != "").\
+        order_by(Tourists.country_name).all()
+
+    map_pts = []
+    
+    for country in map_data:
+        map_dict = {}
+        map_dict['country_name'] = country.country_name
+        map_dict['expd_pct_imp'] = country.expd_pct_imp
+        map_dict['expd_total'] = country.expd_total
+        map_dict['rcpt_pct_exp'] = country.rcpt_pct_exp
+        map_dict['rcpt_total'] = country.rcpt_total
+        map_dict['longitude'] = country.longitude
+        map_dict['latitude'] = country.latitude
+        map_pts.append(map_dict)
+    
+    return jsonify(map_pts)
 
 if __name__ == '__main__':
     app.run(debug=True)
