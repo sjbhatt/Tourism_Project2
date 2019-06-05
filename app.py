@@ -14,7 +14,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db/tourism.sqlite"
 
 db = SQLAlchemy(app)
 
-
 # Create our database model
 class Tourists(db.Model):
     __tablename__ = 'intl_tourism'
@@ -41,14 +40,6 @@ class Tourists(db.Model):
         return '<Tourists %r>' % (self.name)
 
 
-# Create database tables
-@app.before_first_request
-def setup():
-    # Recreate database each time for demo
-    # db.drop_all()
-    db.create_all()
-
-
 @app.route("/candlestick_arrivals")
 def candlestick_arrivals():
     """Render Home Page."""
@@ -59,6 +50,24 @@ def candlestick_departures():
     """Render Home Page."""
     return render_template("candlestick_departures.html")
 
+@app.route("/arrivals")
+def arrivals():
+    """Render Arrivals Page."""
+    return render_template("arrivals.html")
+
+@app.route("/departures")
+def departures():
+    """Render Arrivals Page."""
+    return render_template("departures.html")
+
+@app.route("/combined_data")
+def combined_data():
+    """Render Arrivals Page."""
+    return render_template("combinedData.html")
+
+@app.route("/circlemap")
+def tourism():
+    return render_template("circlemap.html")
 
 @app.route("/tourism_arrival_data")
 def tourism_arrival_data():
@@ -135,7 +144,6 @@ def tourism_departure_data():
 @app.route("/arriv_dep_data")
 def tourism_arriv_dep_data():
     
-    # Query for the top 10 emoji data
     # arrival_results = db.session.query (Tourists).filter(Tourists.year >= 2008, Tourists.year<=2017).\
     #     order_by(Tourists.arrivals.desc()).\
     #     limit(10).all()
@@ -154,20 +162,6 @@ def tourism_arriv_dep_data():
 
     return jsonify(data)
 
-@app.route("/arrivals")
-def arrivals():
-    """Render Arrivals Page."""
-    return render_template("arrivals.html")
-
-@app.route("/departures")
-def departures():
-    """Render Arrivals Page."""
-    return render_template("departures.html")
-
-@app.route("/combined_data")
-def combined_data():
-    """Render Arrivals Page."""
-    return render_template("combinedData.html")
 
 @app.route("/tourism_mapdata.json")
 def tourism_lnglat_filter():
