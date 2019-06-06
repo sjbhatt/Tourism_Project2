@@ -60,16 +60,16 @@ function mapsInitialize(){
   // Set up heat legend
   let heatLegend = chart.createChild(am4maps.HeatLegend);
   heatLegend.series = polygonSeries;
-  heatLegend.align = "right";
-  heatLegend.valign = "bottom";
+  heatLegend.align = "left";
+  heatLegend.valign = "middle";
   heatLegend.width = am4core.percent(100);
   //heatLegend.marginRight = am4core.percent(4);
   heatLegend.minValue = 0;
   heatLegend.maxValue = 87000000;
-  heatLegend.orientation = "horizontal";
-  heatLegend.padding(20, 20, 20, 20);
+  heatLegend.orientation = "vertical";
+  //heatLegend.padding(20, 20, 20, 20);
   heatLegend.valueAxis.renderer.labels.template.fontSize = 15;
-  heatLegend.valueAxis.renderer.minGridDistance = 40;
+  heatLegend.valueAxis.renderer.minGridDistance = 10;
 
 
   polygonSeries.mapPolygons.template.events.on("over", event => {
